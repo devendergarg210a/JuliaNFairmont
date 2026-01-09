@@ -1,0 +1,838 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SealPro Driveways - Dale City VA Driveway Sealing Experts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-green': '#1e3a2e',
+                        'forest-green': '#2d5a3d',
+                        'muted-gold': '#d4af37',
+                        'warm-gold': '#f4e4a6',
+                        'sage': '#9caf88',
+                        'earth-brown': '#8b7355'
+                    },
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(30, 58, 46, 0.9) 0%, rgba(45, 90, 61, 0.8) 100%);
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+            height: 400px;
+        }
+        
+        .bento-main {
+            grid-row: 1 / 3;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .bento-map {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .bento-stats {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 240px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .content-main {
+            margin-left: 280px;
+            padding: 0 2rem;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(30, 58, 46, 0.3) 50%, transparent 100%);
+            margin: 4rem 0;
+        }
+        
+        .process-step {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 2rem;
+            height: 2rem;
+            background: #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        
+        .process-step:nth-child(1)::before { content: '1'; }
+        .process-step:nth-child(2)::before { content: '2'; }
+        .process-step:nth-child(3)::before { content: '3'; }
+        .process-step:nth-child(4)::before { content: '4'; }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                display: none;
+            }
+            .content-main {
+                margin-left: 0;
+                padding: 0 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                height: auto;
+                gap: 1rem;
+            }
+            .bento-main {
+                grid-row: auto;
+            }
+            .bento-main h1 {
+                font-size: 1.875rem;
+                line-height: 2.25rem;
+            }
+            .bento-main p {
+                font-size: 1rem;
+            }
+            .bento-map, .bento-stats {
+                height: 200px;
+            }
+            
+            .bento-main, .bento-map, .bento-stats {
+                word-wrap: break-word;
+            }
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(30, 58, 46, 0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(30, 58, 46, 0.15);
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid rgba(30, 58, 46, 0.1);
+        }
+        
+        .faq-question {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        
+        .faq-question:hover {
+            color: #d4af37;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 200px;
+        }
+        
+        .sticky-call {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #d4af37;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .sticky-call:hover {
+            background: #c19b2e;
+            transform: scale(1.05);
+        }
+        
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="font-sans text-gray-800 bg-gray-50">
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+      <h3 class="font-serif text-lg font-semibold text-deep-green mb-4">Contents</h3>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="#hero" class="text-forest-green hover:text-muted-gold transition-colors">Introduction</a>
+        </li>
+        <li>
+          <a href="#experts" class="text-forest-green hover:text-muted-gold transition-colors">Why Choose Us</a>
+        </li>
+        <li>
+          <a href="#services" class="text-forest-green hover:text-muted-gold transition-colors">Our Services</a>
+        </li>
+        <li>
+          <a href="#process" class="text-forest-green hover:text-muted-gold transition-colors">Our Process</a>
+        </li>
+        <li>
+          <a href="#contact" class="text-forest-green hover:text-muted-gold transition-colors">Get a Quote</a>
+        </li>
+        <li>
+          <a href="#faq" class="text-forest-green hover:text-muted-gold transition-colors">FAQ</a>
+        </li>
+        <li>
+          <a href="#footer" class="text-forest-green hover:text-muted-gold transition-colors">Contact Info</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-main">
+      <!-- Hero Section -->
+      <section id="hero" class="relative min-h-screen flex items-center justify-center mb-16">
+        <div id="vanta-bg"></div>
+        <div class="hero-bg absolute inset-0"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+          <div class="bento-grid">
+            <div class="bento-main">
+              <h1 class="font-serif text-4xl lg:text-5xl font-bold text-deep-green mb-6 leading-tight">
+                <em class="text-muted-gold">Dale City's Premier</em>
+                <br>
+                Driveway Sealing Service
+              </h1>
+              <p class="text-lg text-forest-green mb-8 leading-relaxed">
+                Protect your investment with professional driveway sealing from ioanonline.com.
+                Serving Dale City homeowners with quality workmanship and exceptional results.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <button class="bg-muted-gold text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+                  Get a Free Quote
+                </button>
+                <button class="border-2 border-deep-green text-deep-green px-8 py-3 rounded-full font-semibold hover:bg-deep-green hover:text-white transition-all duration-300">
+                  Our Services
+                </button>
+              </div>
+            </div>
+
+            <div class="bento-map">
+              <iframe src="https://maps.google.com/maps?q=38.6370622,-77.3110946&zoom=14&output=embed" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+
+            <div class="bento-stats">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-deep-green mb-2">15+</div>
+                <div class="text-sm text-forest-green">Years Experience</div>
+              </div>
+              <div class="text-center mt-4">
+                <div class="text-3xl font-bold text-deep-green mb-2">1000+</div>
+                <div class="text-sm text-forest-green">Driveways Sealed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Driveway Sealing Experts Section -->
+      <section id="experts" class="mb-20">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="font-serif text-3xl font-bold text-deep-green mb-6">Driveway Sealing Experts in Dale City</h2>
+            <p class="text-lg text-forest-green leading-relaxed">
+              Welcome to ioanonline.com. Dale City's trusted provider of professional driveway sealing services.
+              For years, we've been protecting and enhancing driveways throughout Dale City and surrounding areas
+              with our expert sealing techniques and premium materials.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-16 h-16 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-home text-2xl text-muted-gold"></i>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Locally Owned & Operated</h3>
+              <p class="text-forest-green text-sm">Understanding local climate, challenges, and regulations</p>
+            </div>
+
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-16 h-16 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-shield-alt text-2xl text-muted-gold"></i>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Licensed & Insured</h3>
+              <p class="text-forest-green text-sm">Peace of mind with full insurance and credentials</p>
+            </div>
+
+            <div class="text-center p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-16 h-16 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-medal text-2xl text-muted-gold"></i>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Quality Guaranteed</h3>
+              <p class="text-forest-green text-sm">Satisfaction guarantee on every project</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Why Choose Us Section -->
+      <section class="mb-20">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="font-serif text-4xl font-bold text-deep-green text-center mb-12">Why Choose Us?</h2>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-tint text-muted-gold"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-lg font-semibold text-deep-green mb-2">Premium Materials</h3>
+                <p class="text-forest-green text-sm">Commercial-grade sealants protect against harsh weather, UV rays, and wear</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-tools text-muted-gold"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-lg font-semibold text-deep-green mb-2">Comprehensive Service</h3>
+                <p class="text-forest-green text-sm">End-to-end process with attention to detail</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-dollar-sign text-muted-gold"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-lg font-semibold text-deep-green mb-2">Transparent Pricing</h3>
+                <p class="text-forest-green text-sm">Clear, upfront estimates before work begins</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-user-tie text-muted-gold"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-lg font-semibold text-deep-green mb-2">Experienced Technicians</h3>
+                <p class="text-forest-green text-sm">Skilled team with years of hands-on driveway sealing experience</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-clock text-muted-gold"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-lg font-semibold text-deep-green mb-2">Timely Completion</h3>
+                <p class="text-forest-green text-sm">Respect your time; work completed efficiently</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-heart text-muted-gold"></i>
+              </div>
+              <div>
+                <h3 class="font-serif text-lg font-semibold text-deep-green mb-2">Customer Satisfaction</h3>
+                <p class="text-forest-green text-sm">Prioritizing excellent results and experiences for each client</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Our Services Section -->
+      <section id="services" class="mb-20">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="font-serif text-4xl font-bold text-deep-green mb-6">Our Services</h2>
+            <p class="text-lg text-forest-green max-w-2xl mx-auto">
+              We offer comprehensive driveway sealing services to Dale City homeowners and businesses,
+              tailored to meet your specific needs.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="service-card bg-white rounded-lg p-8 shadow-sm">
+              <div class="w-16 h-16 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shield-alt text-2xl text-muted-gold"></i>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-deep-green text-center mb-4">Asphalt Sealcoating</h3>
+              <ul class="space-y-2 text-sm text-forest-green">
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Shields against weather, UV rays, and stains
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Enhances appearance
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Prolongs pavement life
+                </li>
+              </ul>
+            </div>
+
+            <div class="service-card bg-white rounded-lg p-8 shadow-sm">
+              <div class="w-16 h-16 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-tools text-2xl text-muted-gold"></i>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-deep-green text-center mb-4">Crack Filling & Repair</h3>
+              <ul class="space-y-2 text-sm text-forest-green">
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Fills cracks to prevent water intrusion
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Prevents further driveway deterioration
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Provides smooth, even look
+                </li>
+              </ul>
+            </div>
+
+            <div class="service-card bg-white rounded-lg p-8 shadow-sm">
+              <div class="w-16 h-16 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-calendar-alt text-2xl text-muted-gold"></i>
+              </div>
+              <h3 class="font-serif text-xl font-semibold text-deep-green text-center mb-4">Maintenance Programs</h3>
+              <ul class="space-y-2 text-sm text-forest-green">
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Scheduled treatments and inspections
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Regular sealcoating
+                </li>
+                <li class="flex items-center">
+                  <i class="fas fa-check text-muted-gold mr-2"></i>
+                  Preventative care to avoid costly repairs
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- How Can We Help Section -->
+      <section id="process" class="mb-20">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="font-serif text-4xl font-bold text-deep-green mb-6">How Can We Help?</h2>
+            <p class="text-lg text-forest-green">
+              Our process makes getting your Dale City driveway sealed simple and stress-free.
+            </p>
+          </div>
+
+          <div class="space-y-8">
+            <div class="process-step">
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Consultation</h3>
+              <p class="text-forest-green">We assess your driveway's current condition and discuss your specific needs.</p>
+            </div>
+
+            <div class="process-step">
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Detailed Quote</h3>
+              <p class="text-forest-green">You receive a full, transparent quote outlining all services and costs.</p>
+            </div>
+
+            <div class="process-step">
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Professional Service</h3>
+              <p class="text-forest-green">Our skilled team performs the sealing with minimal disruption to you.</p>
+            </div>
+
+            <div class="process-step">
+              <h3 class="font-serif text-xl font-semibold text-deep-green mb-2">Final Inspection</h3>
+              <p class="text-forest-green">We conduct a final walk-through to ensure your complete satisfaction.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- Ready to Protect Your Driveway Section -->
+      <section id="contact" class="mb-20">
+        <div class="max-w-6xl mx-auto">
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div class="bg-white rounded-lg p-8 shadow-sm border border-gray-100">
+              <h2 class="font-serif text-3xl font-bold text-deep-green mb-6">Ready to Protect Your Driveway?</h2>
+
+              <div class="space-y-6">
+                <div class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-phone text-muted-gold"></i>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-deep-green">Call Us:</div>
+                    <div class="text-forest-green">877-784-8209</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-envelope text-muted-gold"></i>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-deep-green">Email:</div>
+                    <div class="text-forest-green">info@sealprova.com</div>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div class="w-12 h-12 bg-muted-gold bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-clock text-muted-gold"></i>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-deep-green mb-2">Business Hours:</div>
+                    <div class="text-forest-green space-y-1">
+                      <div>Monday–Friday: 8:00 AM – 6:00 PM</div>
+                      <div>Saturday: 8:00 AM – 4:00 PM</div>
+                      <div>Sunday: Closed</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-lg p-8 shadow-sm border border-gray-100">
+              <h3 class="font-serif text-2xl font-bold text-deep-green mb-6">Get a Free Quote</h3>
+
+              <form id="quoteForm" class="space-y-4">
+                <div>
+                  <label for="fullName" class="block text-sm font-semibold text-deep-green mb-2">Full Name *</label>
+                  <input type="text" id="fullName" name="fullName" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-muted-gold focus:border-transparent transition-all">
+                </div>
+
+                <div>
+                  <label for="email" class="block text-sm font-semibold text-deep-green mb-2">Email Address *</label>
+                  <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-muted-gold focus:border-transparent transition-all">
+                </div>
+
+                <div>
+                  <label for="phone" class="block text-sm font-semibold text-deep-green mb-2">Phone Number *</label>
+                  <input type="tel" id="phone" name="phone" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-muted-gold focus:border-transparent transition-all">
+                </div>
+
+                <div>
+                  <label for="service" class="block text-sm font-semibold text-deep-green mb-2">Service Needed</label>
+                  <select id="service" name="service" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-muted-gold focus:border-transparent transition-all">
+                    <option value="">Select a service...</option>
+                    <option value="asphalt-sealcoating">Asphalt Sealcoating</option>
+                    <option value="crack-filling">Crack Filling & Repair</option>
+                    <option value="maintenance">Maintenance Program</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="message" class="block text-sm font-semibold text-deep-green mb-2">Message</label>
+                  <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-muted-gold focus:border-transparent transition-all" placeholder="Tell us about your driveway sealing needs..."></textarea>
+                </div>
+
+                <div>
+                  <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                </div>
+
+                <button type="submit" class="w-full bg-muted-gold text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-[1.02]">
+                  Submit Request
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="mb-20">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="font-serif text-4xl font-bold text-deep-green text-center mb-12">Frequently Asked Questions</h2>
+
+          <div class="space-y-4">
+            <div class="faq-item">
+              <div class="faq-question p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-serif text-lg font-semibold text-deep-green">How often should I seal my driveway in Dale City?</h3>
+              </div>
+              <div class="faq-answer p-6 bg-gray-50 rounded-b-lg">
+                <p class="text-forest-green">For Dale City homes, we typically recommend sealing your asphalt driveway every 2–3 years to maintain optimal protection and appearance.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-serif text-lg font-semibold text-deep-green">How long does the sealing process take?</h3>
+              </div>
+              <div class="faq-answer p-6 bg-gray-50 rounded-b-lg">
+                <p class="text-forest-green">Most residential driveways can be sealed in a single day. The sealant itself needs approximately 24–48 hours to cure completely before you can drive on it.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-serif text-lg font-semibold text-deep-green">What's the best time of year to seal a driveway in Dale City?</h3>
+              </div>
+              <div class="faq-answer p-6 bg-gray-50 rounded-b-lg">
+                <p class="text-forest-green">The ideal time is typically from late spring through early fall, when temperatures are consistently above 50°F and there is no rain forecast for at least 24–48 hours after application.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-serif text-lg font-semibold text-deep-green">Do you offer warranties on your work?</h3>
+              </div>
+              <div class="faq-answer p-6 bg-gray-50 rounded-b-lg">
+                <p class="text-forest-green">Yes, we stand behind our workmanship and offer a warranty on our services. Specific warranty details will be provided during your consultation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA Section -->
+      <section class="mb-20">
+        <div class="bg-deep-green text-white rounded-lg p-12 text-center">
+          <h2 class="font-serif text-4xl font-bold mb-6">Protect Your Dale City Driveway Today</h2>
+          <p class="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
+            Don't wait until cracks and damage compromise your driveway's integrity.
+            Contact ioanonline.com for professional driveway sealing services in Dale City.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button class="bg-muted-gold text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+              Call for a Free Quote
+            </button>
+            <button class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-deep-green transition-all duration-300">
+              Contact Us
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer id="footer" class="bg-deep-green text-white py-16">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="font-serif text-xl font-bold mb-4">SealPro Driveways</h3>
+              <p class="text-gray-300 mb-6">Protecting your investment with professional driveway sealing services.</p>
+
+              <div class="space-y-2">
+                <div class="flex items-center space-x-3">
+                  <i class="fas fa-phone text-muted-gold"></i>
+                  <span>877-784-8209</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <i class="fas fa-envelope text-muted-gold"></i>
+                  <span>info@sealprova.com</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <i class="fas fa-map-marker-alt text-muted-gold"></i>
+                  <span>Serving your local area</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-serif text-xl font-bold mb-4">Business Hours</h3>
+              <div class="space-y-2 text-gray-300">
+                <div class="flex justify-between">
+                  <span>Mon–Fri:</span>
+                  <span>8:00 AM – 6:00 PM</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Saturday:</span>
+                  <span>8:00 AM – 4:00 PM</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Sunday:</span>
+                  <span>Closed</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-serif text-xl font-bold mb-4">Quick Links</h3>
+              <div class="space-y-2">
+                <a href="#hero" class="block text-gray-300 hover:text-muted-gold transition-colors">Home</a>
+                <a href="#services" class="block text-gray-300 hover:text-muted-gold transition-colors">Services</a>
+                <a href="#process" class="block text-gray-300 hover:text-muted-gold transition-colors">Our Process</a>
+                <a href="#contact" class="block text-gray-300 hover:text-muted-gold transition-colors">Get a Quote</a>
+                <a href="#faq" class="block text-gray-300 hover:text-muted-gold transition-colors">FAQ</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+            <p class="text-gray-400">&copy; 2025 SealPro Driveways. All Rights Reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Sticky Call Button -->
+    <a href="tel:877-784-8209" class="sticky-call">
+      <i class="fas fa-phone mr-2"></i>
+      Call Now: 877-784-8209
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Vanta.js background
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x1e3a2e,
+            backgroundColor: 0x2d5a3d,
+            points: 8.00,
+            maxDistance: 23.00,
+            spacing: 17.00
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+            });
+        });
+
+        // Form Validation
+        const form = document.getElementById('quoteForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!fullName || !email || !phone) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            if (!validatePhone(phone)) {
+                alert('Please enter a valid phone number.');
+                return;
+            }
+            
+            // In a real implementation, you would submit the form data to your server
+            alert('Thank you for your request! We will contact you shortly.');
+            form.reset();
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[\+]?[1-9][\d]{0,15}$/;
+            return re.test(phone.replace(/[\s\-\(\)]/g, ''));
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+  </body>
+
+</html>
