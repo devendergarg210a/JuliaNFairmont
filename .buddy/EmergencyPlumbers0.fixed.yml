@@ -1,0 +1,8 @@
+- pipeline: emergencyplumbers0
+  name: EmergencyPlumbers0
+  refs:
+  - refs/heads/main
+  fail_on_prepare_env_warning: true
+  resources: NANO
+  events:
+  - type: WEBHOOK
